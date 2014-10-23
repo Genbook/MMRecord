@@ -166,13 +166,15 @@ NSString * const AFMMRecordResponseSerializerWithDataKey = @"AFMMRecordResponseS
     // Verify that the server responded in an expected manner.
     if (!([responseObject isKindOfClass:[NSDictionary class]]) &&
         !([responseObject isKindOfClass:[NSArray class]])) {
-        NSString *errorDescription = [NSString stringWithFormat:@"The response object should be an array or dictionary. The returned response object type was: %@", NSStringFromClass([responseObject class])];
-        NSDictionary *parameters = [debugger parametersWithKeys:@[MMRecordDebuggerParameterErrorDescription] values:@[errorDescription]];
-        
-        [debugger handleErrorCode:MMRecordErrorCodeInvalidResponseFormat
-                   withParameters:parameters];
-        
-        *error = [debugger primaryError];
+        // AW: this is causing an error for successful empty responses
+
+//        NSString *errorDescription = [NSString stringWithFormat:@"The response object should be an array or dictionary. The returned response object type was: %@", NSStringFromClass([responseObject class])];
+//        NSDictionary *parameters = [debugger parametersWithKeys:@[MMRecordDebuggerParameterErrorDescription] values:@[errorDescription]];
+//        
+//        [debugger handleErrorCode:MMRecordErrorCodeInvalidResponseFormat
+//                   withParameters:parameters];
+//        
+//        *error = [debugger primaryError];
         
         return nil;
     }
