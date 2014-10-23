@@ -93,25 +93,27 @@
 
 #pragma mark - Record Parsing
 
+// DS
 - (NSArray *)records {
-    // Step 0: Build Proto Records and Response Groups
-    [self buildProtoRecordsAndResponseGroups];
-    
-    // Step 1: Obtain Records (Fetch, Associate, Create)
-    for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
-        [responseGroup obtainRecordsForProtoRecordsInContext:self.context];
+    @synchronized(self){
+        // Step 0: Build Proto Records and Response Groups
+        [self buildProtoRecordsAndResponseGroups];
+        
+        // Step 1: Obtain Records (Fetch, Associate, Create)
+        for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
+            [responseGroup obtainRecordsForProtoRecordsInContext:self.context];
+        }
+        
+        // Step 2: Populate Records
+        for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
+            [responseGroup populateAllRecords];
+        }
+        
+        // Step 3: Establish Relationships
+        for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
+            [responseGroup establishRelationshipsForAllRecords];
+        }
     }
-    
-    // Step 2: Populate Records
-    for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
-        [responseGroup populateAllRecords];
-    }
-    
-    // Step 3: Establish Relationships
-    for (MMRecordResponseGroup *responseGroup in [self.responseGroups allValues]) {
-        [responseGroup establishRelationshipsForAllRecords];
-    }
-    
     // Step 4: Profit!
     NSArray *records = [self recordsFromObjectGraph];
     return records;

@@ -149,14 +149,18 @@
     return value;
 }
 
+// DS
 + (NSString *)stringValueForAttribute:(NSAttributeDescription *)attribute value:(id)value {
     if (value != nil && ![value isKindOfClass:[NSString class]]) {
-        return [value stringValue];
+        if ([value isKindOfClass:[NSNull class]]) {
+            return @"";
+        } else {
+            return [value stringValue];
+        }
     }
     
     return value;
 }
-
 + (void)establishRelationshipsOnProtoRecord:(MMRecordProtoRecord *)protoRecord {
     for (NSRelationshipDescription *relationshipDescription in protoRecord.relationshipDescriptions) {
         NSArray *relationshipProtoRecords = [protoRecord relationshipProtoRecordsForRelationshipDescription:relationshipDescription];
