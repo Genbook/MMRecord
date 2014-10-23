@@ -227,6 +227,8 @@
     id primaryValue = [representation primaryKeyValueFromDictionary:recordResponseObject];
     MMRecordProtoRecord *proto = [recordResponseGroup protoRecordForPrimaryKeyValue:primaryValue];
     
+    // DS
+//    if (proto == nil && entity != nil) {
     if (proto == nil) {
         proto = [MMRecordProtoRecord protoRecordWithDictionary:recordResponseObject
                                                         entity:entity
