@@ -40,6 +40,7 @@
 + (MMRecordProtoRecord *)protoRecordWithDictionary:(NSDictionary *)dictionary
                                             entity:(NSEntityDescription *)entity
                                     representation:(MMRecordRepresentation *)representation {
+    // If the following NSParameterAssert fails for some weird reason and you are sure the entity is infact subclassing MMRecord then regenerate the offending ManagedObject and re-subclass it from MMRecord
     NSParameterAssert([NSClassFromString([entity managedObjectClassName]) isSubclassOfClass:[MMRecord class]]);
     MMRecordProtoRecord *protoRecord = [[MMRecordProtoRecord alloc] init];
     protoRecord.dictionary = dictionary;

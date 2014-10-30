@@ -133,7 +133,12 @@
     return value;
 }
 
+// DS
 + (NSNumber *)numberValueForAttribute:(NSAttributeDescription *)attribute value:(id)value {
+    if ([value isKindOfClass:[NSString class]]) {
+        return @([value intValue]);
+    }
+    
     if ([value isKindOfClass:[NSString class]]) {
         return @([value intValue]);
     }
